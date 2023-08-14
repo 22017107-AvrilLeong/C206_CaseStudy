@@ -20,7 +20,6 @@ private String UniqueCurrencyCode;
 private double  ExchangeRate;
 
 public Rate(String string, String string2, String string3) {
-	// TODO Auto-generated constructor stub
 }
 /**
  * @return the currencyName
