@@ -19,7 +19,7 @@ private String CurrencyName;
 private String UniqueCurrencyCode;
 private double  ExchangeRate;
 
-public Rate(String string, String string2, String string3) {
+public Rate(String string, String string2, double string3) {
 }
 /**
  * @return the currencyName

@@ -14,9 +14,9 @@ public class C206_CaseStudy {
 		userList.add(new User(103, "User3", "1234", "Helper", 34567890));
 		//Currency exchange management
 		ArrayList<Rate> CurrencyNameList = new ArrayList<Rate>();
-		CurrencyNameList.add(new Rate("Singapore Dollar", "SGD", "3.1"));
-		CurrencyNameList.add(new Rate("Australian Dollar", "AUS", "2.1"));
-		CurrencyNameList.add(new Rate("Ringgit", "RM", "2.1"));
+		CurrencyNameList.add(new Rate("Singapore Dollar", "SGD", 3.1));
+		CurrencyNameList.add(new Rate("Australian Dollar", "AUS", 2.1));
+		CurrencyNameList.add(new Rate("Ringgit", "RM", 2.1));
 		
 		
 		
@@ -47,7 +47,9 @@ public class C206_CaseStudy {
 
 			} else if (option == 5) {
 				//Rate Management
-				Rate(rateList);
+				viewRate();
+				addRate();
+				delRate();
 
 
 			} else if (option == 6) {
@@ -231,7 +233,36 @@ public class C206_CaseStudy {
 		}
 	}
 
-	// Feedback Management
+	// Rate Management
+	
+	public static void viewRate() {
+		System.out.println(String.format("%-10s %-15s %-15d", "CurrencyName", "UniqueCurrencyCode",
+				"ExchangeRate"));
+	}
+	
+	 public void addRate(String currencyName, String uniqueCurrencyCode, double exchangeRate,ArrayList<Rate> CurrencyNameList) {
+	        Rate rate = new Rate(currencyName, uniqueCurrencyCode, exchangeRate);
+	        CurrencyNameList.add(rate);
+	        System.out.println("Rate added successfully.");
+	    }
+
+	    public void delRate(String uniqueCurrencyCode,ArrayList<Rate> CurrencyNameList) {
+	        Rate rateToDelete = null;
+	        for (Rate rate : CurrencyNameList) {
+	            if (rate.getUniqueCurrencyCode().equals(uniqueCurrencyCode)) {
+	                rateToDelete = rate;
+	                break;
+	            }
+	        }
+	        if (rateToDelete != null) {
+	            CurrencyNameList.remove(rateToDelete);
+	            System.out.println("Rate deleted successfully.");
+	        } else {
+	            System.out.println("Rate with unique currency code " + uniqueCurrencyCode + " not found.");
+	        }
+	    }
+	
+	
 
 }
 
