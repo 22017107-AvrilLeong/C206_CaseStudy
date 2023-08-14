@@ -55,4 +55,12 @@ public double getExchangeRate() {
 public void setExchangeRate(double exchangeRate) {
 	ExchangeRate = exchangeRate;
 }
+
+/**
+ * @return
+ */
+public static String getRateID() {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
