@@ -21,9 +21,7 @@ private double  ExchangeRate;
 
 public Rate(String string, String string2, double string3) {
 }
-/**
- * @return the currencyName
- */
+
 public String getCurrencyName() {
 	return CurrencyName;
 }
