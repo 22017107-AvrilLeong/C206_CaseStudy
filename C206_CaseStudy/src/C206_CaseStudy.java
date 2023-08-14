@@ -12,7 +12,14 @@ public class C206_CaseStudy {
 		userList.add(new User(101, "User1", "1234", "Admin", 12345678));
 		userList.add(new User(102, "User2", "1234", "Moderator", 23456789));
 		userList.add(new User(103, "User3", "1234", "Helper", 34567890));
-
+		//Currency exchange management
+		ArrayList<Rate> CurrencyNameList = new ArrayList<Rate>();
+		CurrencyNameList.add(new Rate("Singapore Dollar", "SGD", "3.1"));
+		CurrencyNameList.add(new Rate("Australian Dollar", "AUS", "2.1"));
+		CurrencyNameList.add(new Rate("Ringgit", "RM", "2.1"));
+		
+		
+		
 		//================================= Main Program  =====================================================
 
 		int option = 0;
@@ -40,6 +47,7 @@ public class C206_CaseStudy {
 
 			} else if (option == 5) {
 				//Rate Management
+				Rate(rateList);
 
 
 			} else if (option == 6) {
