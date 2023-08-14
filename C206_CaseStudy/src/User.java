@@ -12,6 +12,10 @@ public class User {
 		this.role = role;
 		this.contactInfo = contactInfo;
 	}
+	public void getID() {
+		
+		System.out.println(30);
+	}
 	
 	public int getUserID() {
 		return userID;
