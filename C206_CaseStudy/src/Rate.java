@@ -18,11 +18,7 @@ public class Rate {
 private String CurrencyName; 
 private String UniqueCurrencyCode;
 private double  ExchangeRate;
-/**
- * @param string
- * @param string2
- * @param string3
- */
+
 public Rate(String string, String string2, String string3) {
 	// TODO Auto-generated constructor stub
 }
