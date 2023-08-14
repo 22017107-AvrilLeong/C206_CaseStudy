@@ -16,7 +16,6 @@ public class User {
 		
 		System.out.println(30);
 	}
-	
 	public int getUserID() {
 		return userID;
 	}
