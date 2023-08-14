@@ -132,6 +132,10 @@ public class C206_CaseStudy {
 
 	}
 	
+	public static void editrate() {
+		
+	}
+	
 	public static void userMenu() {
 		C206_CaseStudy.setHeader("User Management System");
 
