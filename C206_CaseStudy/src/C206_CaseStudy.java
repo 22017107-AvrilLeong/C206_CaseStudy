@@ -12,6 +12,11 @@ public class C206_CaseStudy {
 		userList.add(new User(101, "User1", "1234", "Admin", 12345678));
 		userList.add(new User(102, "User2", "1234", "Moderator", 23456789));
 		userList.add(new User(103, "User3", "1234", "Helper", 34567890));
+		
+		// Feedback Class
+		ArrayList<Feedback> feedbackList = new ArrayList<Feedback>();
+		feedbackList.add(new Feedback("User111", "The service is streamline!", 8, "23/06/2023", "User111@gmail.com", (111)));
+		feedbackList.add(new Feedback("User211","The system need some improvement", 5, "12/08/2023", "User211@gmail.com", 211));
 
 		//================================= Main Program  =====================================================
 
@@ -44,7 +49,7 @@ public class C206_CaseStudy {
 
 			} else if (option == 6) {
 				//Feedback Management
-
+				feedbackManagement(feedbackList);
 
 			} else if (option == 7) {
 				System.out.println("Bye!");
@@ -220,7 +225,151 @@ public class C206_CaseStudy {
 	}
 
 	// Feedback Management
+	public static void feedbackManagement(ArrayList<Feedback> feedbackList) {
+		feedbackMenu();
+		int option = 0;
+		option = Helper.readInt("Enter an option > ");
 
+		while (option!= 4) {
+			if (option == 1) {
+				Feedback feedback = inputFeedback();
+				C206_CaseStudy.addfeedback(feedbackList, feedback);
+				System.out.println("Feedback added");
+
+				feedbackMenu();
+				option = Helper.readInt("Enter an option > ");
+
+			}
+			else if (option == 2) {
+				ViewFeedback(feedbackList);
+				
+				feedbackMenu();
+				option = Helper.readInt("Enter an option > ");
+				
+			}
+			else if (option == 3) {
+				int delete = inputDeleteFeedback();
+				deleteFeedback(feedbackList,delete);
+				
+				feedbackMenu();
+				option = Helper.readInt("Enter an option > ");
+
+			}else if (option == 4) {
+				System.out.println("Thank you for using the Feedback Management System!");
+
+			}else {
+				System.out.println("Invalid Option");
+			}
+		}
+
+	}
+	
+	public static void feedbackMenu() {
+		C206_CaseStudy.setHeader("Feedback Management System");
+
+		System.out.println("1. Add new Feedback");
+		System.out.println("2. View all Feedback");
+		System.out.println("3. Delete Feedback");
+		System.out.println("4. Back to Main Menu");
+
+		Helper.line(80, "-");
+	}
+	
+	//Feedback Input Method
+		public static Feedback inputFeedback(){
+			//input Feedback Details
+			String customername = Helper.readString("Enter Name > ");
+			String message = Helper.readString("Enter Message > ");
+			int rating = Helper.readInt("Enter Rating > ");
+			String fbdate = Helper.readString("Enter Date > ");
+			String email = Helper.readString("Enter email > ");
+			int id = Helper.readInt("Enter ID > ");
+
+			Feedback feedback = new Feedback(customername, message, rating, fbdate, email, id);
+			return feedback;
+		}
+	
+		//Feedback Add Method
+		public static void addfeedback(ArrayList<Feedback> feedbackList, Feedback feedback) {
+			int maxWordLimit = 100; // Define the maximum word limit
+			Feedback good;
+			for(Feedback f: feedbackList) {
+				good = f;
+				if (good.getCustomername().equals(feedback.getCustomername()))
+					return;
+			}
+			if ((feedback.getMessage().isEmpty()) || (feedback.getRating() == 0)|| (feedback.getFBdate().isEmpty())){
+				return;
+			}
+			
+			if (feedback.getMessage().split("\\s+").length > maxWordLimit) {
+				return;
+			}
+			
+			if (!feedback.getEmail().equals(feedback.getEmail())) {
+		        return; // Exit if the feedback email is not the same as the account email
+		    }
+			feedbackList.add(feedback);
+		}
+		
+		//Retrieve Feedback Method
+		public static String retrieveFeedback(ArrayList <Feedback> feedbackList) {
+			String output = "";
+
+			for (Feedback feedback : feedbackList) {
+				output += String.format("%-10s %-40s %-20d %-20s %-30s %-20d\n", feedback.getCustomername(), feedback.getMessage(),
+						feedback.getRating(), feedback.getFBdate(), feedback.getEmail(), feedback.getId());
+			}
+			return output;
+		}
+		
+		//View All Feedbacks
+		public static void ViewFeedback(ArrayList <Feedback> feedbackList) {
+			C206_CaseStudy.setHeader("FEEDBACK LIST");
+			String output = String.format("%-10s %-40s %-20s %-20s %-30s %-20s\n", "NAME", "MESSAGE",
+					"RATING", "DATE", "EMAIL", "ID");
+			output += retrieveFeedback(feedbackList);	
+			System.out.println(output);
+		}
+		
+		//Delete Input Method
+		public static int inputDeleteFeedback(){
+			int deleteFeedback = Helper.readInt("Enter the Feedback to delete >");
+
+			return deleteFeedback;
+		}
+		
+		//Delete Feedback
+		public static void deleteFeedback(ArrayList <Feedback> feedbackList, int deleteFeedback) {
+
+			boolean found = false;
+			for (Feedback feedback:feedbackList) {
+				if (feedback.getId() == deleteFeedback) {
+					found = true;
+					System.out.println(String.format("%-10s %-40s %-20s %-20s %-30s %-20s\n", "NAME", "MESSAGE",
+							"RATING", "DATE", "EMAIL", "ID"));
+					System.out.println(String.format("%-10s %-40s %-20s %-20s %-30s %-20s\n", feedback.getCustomername(), feedback.getMessage(),
+							feedback.getRating(), feedback.getFBdate(), feedback.getEmail(), feedback.getId()));
+
+					String confirm = Helper.readString("Confirm Deletion? (Y/N) >");
+
+					if (confirm.equalsIgnoreCase("y")) {
+						feedbackList.remove(feedback);
+						System.out.println("Feedback deleted.");
+					} else {
+						System.out.println("Deletion Cancelled");
+					}
+					break;
+				}
+			}
+
+			if (!found) {
+				System.out.println("Customer Name not found");
+
+			}
+		}
 }
+
+
 
 
