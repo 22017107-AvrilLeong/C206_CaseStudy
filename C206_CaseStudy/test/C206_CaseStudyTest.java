@@ -41,10 +41,12 @@ public class C206_CaseStudyTest {
 		assertEquals("Test that the userList is empty.", 0, userList.size());
 
 		//Given an empty list, after adding 1 User, the size of the list is 1
-		C206_CaseStudy.addUser(userList, user111);		
+		C206_CaseStudy.addUser(userList, user111);
 		assertEquals("Test that the userList size is 1.", 1, userList.size());
-
-
+		
+		//Test that User Added is the same
+		assertEquals("User object should be the same as expected.", user111, userList.get(0));
+		
 		// Add an item
 		C206_CaseStudy.addUser(userList, user211);
 		assertEquals("Test that the userList size is now 2.", 2, userList.size());
