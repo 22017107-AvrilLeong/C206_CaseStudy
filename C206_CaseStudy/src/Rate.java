@@ -37,7 +37,7 @@ public void setCurrencyName(String currencyName) {
 public String getUniqueCurrencyCode() {
 	return UniqueCurrencyCode;
 }
-/**
+/*
  * @param uniqueCurrencyCode the uniqueCurrencyCode to set
  */
 public void setUniqueCurrencyCode(String uniqueCurrencyCode) {
