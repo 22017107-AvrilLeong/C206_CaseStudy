@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.Currency;
 
 public class C206_CaseStudy {
 
 	private static final int OPTION_QUIT = 1;
+	private static final int deleteCurrencyC = 0;
 
 	public static void main(String[] args) {
 		//put all variables and arrayLists below here
@@ -12,6 +14,13 @@ public class C206_CaseStudy {
 		userList.add(new User(101, "User1", "1234", "Admin", 12345678));
 		userList.add(new User(102, "User2", "1234", "Moderator", 23456789));
 		userList.add(new User(103, "User3", "1234", "Helper", 34567890));
+		//Currency Class
+		ArrayList<CurrencyC> currencyList = new ArrayList<CurrencyC>();
+		currencyList.add(new CurrencyC(1001,"United State Dollars", 1.36));
+		currencyList.add(new CurrencyC(1002,"Great Britain Pounds", 1.87));
+
+
+
 
 		//================================= Main Program  =====================================================
 
@@ -28,6 +37,7 @@ public class C206_CaseStudy {
 
 			} else if (option == 2) {
 				// Currency Management
+				currencyManagement(currencyList);
 
 
 			} else if (option == 3) {
@@ -102,15 +112,15 @@ public class C206_CaseStudy {
 			}
 			else if (option ==2) {
 				viewUsers(userList);
-				
+
 				userMenu();
 				option = Helper.readInt("Enter an option > ");
-				
+
 			}
 			else if (option ==3) {
 				int deleteUser = inputDeleteUser();
 				deleteUser(userList,deleteUser);
-				
+
 				userMenu();
 				option = Helper.readInt("Enter an option > ");
 
@@ -123,7 +133,7 @@ public class C206_CaseStudy {
 		}
 
 	}
-	
+
 	public static void userMenu() {
 		C206_CaseStudy.setHeader("User Management System");
 
@@ -134,7 +144,7 @@ public class C206_CaseStudy {
 
 		Helper.line(80, "-");
 	}
-	
+
 	//User Input Method
 	public static User inputUser(){
 		//input User Details
@@ -147,7 +157,7 @@ public class C206_CaseStudy {
 		User user= new User(UserID, username, pass, role, contactInfo);
 		return user;
 	}
-	
+
 	//User Add Method
 	public static void addUser(ArrayList<User> userList, User user) {
 		User loser;
@@ -161,7 +171,7 @@ public class C206_CaseStudy {
 		}
 		userList.add(user);
 	}
-	
+
 	//Retrieve User Method
 	public static String retrieveUser(ArrayList<User> userList) {
 		String output = "";
@@ -172,7 +182,7 @@ public class C206_CaseStudy {
 		}
 		return output;
 	}
-	
+
 	//View All Users
 	public static void viewUsers(ArrayList<User> userList) {
 		C206_CaseStudy.setHeader("USER LIST");
@@ -181,14 +191,14 @@ public class C206_CaseStudy {
 		output += retrieveUser(userList);	
 		System.out.println(output);
 	}
-	
+
 	//Delete Input Method
 	public static int inputDeleteUser(){
 		int deleteUser = Helper.readInt("Enter the User ID to delete >");
 
 		return deleteUser;
 	}
-	
+
 	//Delete Users
 	public static void deleteUser(ArrayList<User> userList, int deleteUser) {
 
@@ -219,8 +229,140 @@ public class C206_CaseStudy {
 		}
 	}
 
-	// Feedback Management
+	//Currency Management
+	public static void currencyManagement(ArrayList<CurrencyC> currencyList) {
+		currencyMenu();
+		int option = 0;
+		option = Helper.readInt("Enter an option > ");
 
+		while (option!= 4) {
+			if (option ==1) {
+				CurrencyC currency = inputCurrency();
+				C206_CaseStudy.addCurrency(currencyList, currency);
+				System.out.println("Currency added");
+
+				currencyMenu();
+				option = Helper.readInt("Enter an option > ");
+
+			}
+			else if (option ==2) {
+				viewCurrencies(currencyList);
+
+				currencyMenu();
+				option = Helper.readInt("Enter an option > ");
+
+			}
+			else if (option ==3) {
+				int deleteUser = inputDeleteUser();
+				deleteCurrency(currencyList,deleteUser);
+
+				currencyMenu();
+				option = Helper.readInt("Enter an option > ");
+
+			}else if (option == 4) {
+				System.out.println("Thank you for using the Currency Management System!");
+
+			}else {
+				System.out.println("Invalid Option");
+			}
+		}
+
+	}
+
+
+	public static void currencyMenu() {
+		C206_CaseStudy.setHeader("Currency Management System");
+
+		System.out.println("1. Add new Currency");
+		System.out.println("2. View all Currencies");
+		System.out.println("3. Delete Currency");
+		System.out.println("4. Back to Main Menu");
+
+		Helper.line(80, "-");
+	}
+
+	//Currency Input Method
+	public static CurrencyC inputCurrency(){
+		//input User Details
+		int currencyCode = Helper.readInt("Enter Currency Code > ");
+		String currencyName = Helper.readString("Enter Currency Name > ");
+		double exchangeRate = Helper.readDouble("Enter Exchange Rate > ");
+
+		CurrencyC currency= new CurrencyC(currencyCode, currencyName, exchangeRate);
+		return currency;
+	}
+
+	//Currency Add Method
+	public static void addCurrency(ArrayList<CurrencyC> currencyList, CurrencyC currency) {
+		CurrencyC loser;
+		for(CurrencyC c: currencyList) {
+			loser = c;
+			if (loser.getCurrencyCode()== currency.getCurrencyCode())
+				return;
+		}
+
+		
+		if(currency.getCurrencyName().isEmpty()) {
+			return;
+		}
+
+		currencyList.add(currency);
+	}
+
+	//Retrieve Currency Method
+	public static String retrieveCurrency(ArrayList<CurrencyC> currencyList) {
+		String output = "";
+
+		for (CurrencyC currency : currencyList) {
+			output += String.format("%-20s %-25s %-25.2f\n", currency.getCurrencyCode(), currency.getCurrencyName(),
+					currency.getExchangeRate());
+		}
+		return output;
+	}
+
+	//View All Currencies
+	public static void viewCurrencies(ArrayList<CurrencyC> currencyList) {
+		C206_CaseStudy.setHeader("CURRENCY LIST");
+		String output = String.format("%-20s %-25s %-25s\n", "CURRENCY CODE", "CURRENCY NAME",
+				"EXCHANGE RATE");
+		output += retrieveCurrency(currencyList);	
+		System.out.println(output);
+	}
+
+	//Delete Input Method
+	public static int inputDeleteCurrency(){
+		int deleteCurrency = Helper.readInt("Enter the Currency Code to delete >");
+
+		return deleteCurrency;
+	}
+
+	//Delete Currency
+	public static void deleteCurrency(ArrayList<CurrencyC> currencyList, int deleteCurrencyCode) {
+
+		boolean found = false;
+		for (CurrencyC currency:currencyList) {
+			if (currency.getCurrencyCode() == deleteCurrencyCode) {
+				found = true;
+				System.out.println(String.format("%-20s %-25s %-25s", "CURRENCY CODE", "CURRENCY NAME", "EXCHANGE RATE"));
+				System.out.println(String.format("%-20d %-25s %-25.2f\n", currency.getCurrencyCode(), currency.getCurrencyName(),
+						currency.getExchangeRate()));
+
+				String confirm = Helper.readString("Confirm Deletion? (Y/N) >");
+
+				if (confirm.equalsIgnoreCase("y")) {
+					currencyList.remove(currency);
+					System.out.println("Currency deleted.");
+				} else {
+					System.out.println("Deletion Cancelled");
+				}
+				break;
+			}
+		}
+
+		if (!found) {
+			System.out.println("Currency Code not found");
+
+		}
+	}
 }
-
 
