@@ -3,7 +3,10 @@ import java.util.Currency;
 
 public class C206_CaseStudy {
 
-//	private static final int RATE_OPTION_QUIT = 4;
+/**
+	 * 
+	 */
+	private static final int ACCOUNT_OPTION_QUIT = 4;
 	private static final int CURRENCY_OPTION_QUIT = 4;
 	private static final int FEEDBACK_OPTION_QUIT = 4;
 	private static final int OPTION_QUIT = 1;
@@ -22,11 +25,17 @@ public class C206_CaseStudy {
 		currencyList.add(new CurrencyC(1001,"United State Dollars", 1.36));
 		currencyList.add(new CurrencyC(1002,"Great Britain Pounds", 1.87));
 
-//		// Rate Class
+		// Rate Class
 //		ArrayList<Rate> rateList = new ArrayList<Rate>();
 //		rateList.add(new Rate("Singapore Dollar", "SGD", 3.1));
 //		rateList.add(new Rate("Australian Dollar", "AUS", 2.1));
 //		rateList.add(new Rate("Ringgit", "RM", 2.1));
+		
+		//Account Class
+		ArrayList<Account> accountList = new ArrayList<Account>();
+		accountList.add(new Account(1235, 87654321));
+		accountList.add(new Account(1245, 87634521));
+		accountList.add(new Account(1256, 87645321));
 
 		// Feedback Class
 		ArrayList<Feedback> feedbackList = new ArrayList<Feedback>();
@@ -55,7 +64,7 @@ public class C206_CaseStudy {
 
 			} else if (option == 4) {
 				// Account Management
-
+				accountManagement(accountList);
 			} else if (option == 5) {
 				// Rate Management
 //				rateManagement(rateList);
@@ -368,6 +377,141 @@ public class C206_CaseStudy {
 
 		}
 	}
+	
+	//=================================Account Management========================================
+	//AccountManagement
+	public static void accountManagement(ArrayList<Account> accountList) {
+		int option = 0;
+		int deleteAccountID = 0;
+		accountMenu();
+		option = Helper.readInt("Enter an option > ");
+		
+		while (option != ACCOUNT_OPTION_QUIT) {
+
+			if(option == 1) {
+				Account account = inputAccount();
+				C206_CaseStudy.addAccount(accountList, account);
+				System.out.println("Account added");
+				
+				accountMenu();
+				option = Helper.readInt("Enter an option > ");
+			} else if (option == 2) {
+	            viewAccounts(accountList);
+
+	            accountMenu();
+	            option = Helper.readInt("Enter an option > ");
+			} else if (option == 3) {
+				if (deleteAccountID == 0) {
+					deleteAccountID = Helper.readInt("Enter Account ID to delete > ");
+				}
+	            deleteAccount(accountList, deleteAccountID);
+	            
+	            accountMenu();
+	            option = Helper.readInt("Enter an option > ");
+			} else if (option == 4) {
+				System.out.println("Thank you for using Account Management System");
+			} else {
+				System.out.println("Invalid Option!");
+			}
+			
+		}
+	}
+	
+	//deleteAccount
+	public static void deleteAccount(ArrayList<Account> accountList, int deleteAccountID) {
+		// TODO Auto-generated method stub
+		boolean found = false;
+		for (Account account:accountList) {
+			if (account.getAccountID() == deleteAccountID) {
+				found = true;
+			    System.out.println(String.format("%-10s %-15s %-10s %-15s\n", "ACCOUNT ID", "CUSTOMER ID", "BALANCE", "ACTIVE"));
+			    
+				System.out.println(String.format("%-10s %-15s %-15s %-20b\n", account.getAccountID(), account.getCustomerID(),
+						account.getBalance(), account.isActive()));
+
+				String confirm = Helper.readString("Confirm Deletion? (Y/N) >");
+
+				if (confirm.equalsIgnoreCase("y")) {
+					accountList.remove(account);
+					System.out.println("Account deleted.");
+				} else {
+					System.out.println("Deletion Cancelled");
+				}
+				break;
+			}
+		}
+
+		if (!found) {
+			System.out.println("Account ID not found");
+
+		}
+
+	}
+
+
+	//viewAccount
+	public static void viewAccounts(ArrayList<Account> accountList) {
+		// TODO Auto-generated method stub
+		C206_CaseStudy.setHeader("ACCOUNT LIST");
+	    System.out.println(String.format("%-10s %-15s %-10s %-15s\n", "ACCOUNT ID", "CUSTOMER ID", "BALANCE", "ACTIVE"));
+	    
+	    String accountInfo = retrieveAccount(accountList);
+	    System.out.println(accountInfo);
+
+	    Helper.line(80, "-");
+	}
+
+	public static String retrieveAccount(ArrayList<Account> accountList) {
+		String output = "";
+		for (Account account : accountList) {
+			if (account != null) {
+				output += String.format("%-10d %-15d %-10.2f %-15b\n",
+						account.getAccountID(), account.getCustomerID(),
+						account.getBalance(), account.isActive() ? "Active" : "Inactive");
+			}
+		}
+		return output;
+	}
+	
+	
+	public static void addAccount(ArrayList<Account> accountList, Account account) {
+		// TODO Auto-generated method stub
+		//check if account is null or not. 
+		if (account == null || account.getAccountID() <= 0) {
+			System.out.println("Invalid Account details. Account is not added!");
+			return;
+		}
+		//check if account with same ID is in the system
+		for (Account existAccount : accountList) {
+			if (existAccount.getAccountID() == account.getAccountID()) {
+				System.out.println("Account with same ID already exists. Account is not added!");
+				return;
+			}
+		}
+		accountList.add(account);
+	}
+
+	public static Account inputAccount() {
+		// TODO Auto-generated method stub
+		int accountID = Helper.readInt("Enter Account ID > ");
+		int customerID = Helper.readInt("Enter Customer ID > ");
+		Account account = new Account(accountID, customerID);
+		return account;
+	}
+
+	public static void accountMenu() {
+		// TODO Auto-generated method stub
+		C206_CaseStudy.setHeader("Account Management System");
+		
+		System.out.println("1. Add new Account");
+		System.out.println("2. View All Accounts");
+		System.out.println("3. Delete Account");
+		System.out.println("4. Back to Main Menu");
+		
+		Helper.line(80, "-");
+	}
+
+	
 	
 	//===========================Feedback Management ======================
 	public static void feedbackManagement(ArrayList<Feedback> feedbackList) {
