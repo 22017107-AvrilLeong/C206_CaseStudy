@@ -3,9 +3,6 @@ import java.util.Currency;
 
 public class C206_CaseStudy {
 
-/**
-	 * 
-	 */
 	private static final int ACCOUNT_OPTION_QUIT = 4;
 	private static final int CURRENCY_OPTION_QUIT = 4;
 	private static final int FEEDBACK_OPTION_QUIT = 4;
@@ -25,12 +22,6 @@ public class C206_CaseStudy {
 		currencyList.add(new CurrencyC(1001,"United State Dollars", 1.36));
 		currencyList.add(new CurrencyC(1002,"Great Britain Pounds", 1.87));
 
-		// Rate Class
-//		ArrayList<Rate> rateList = new ArrayList<Rate>();
-//		rateList.add(new Rate("Singapore Dollar", "SGD", 3.1));
-//		rateList.add(new Rate("Australian Dollar", "AUS", 2.1));
-//		rateList.add(new Rate("Ringgit", "RM", 2.1));
-		
 		//Account Class
 		ArrayList<Account> accountList = new ArrayList<Account>();
 		accountList.add(new Account(1235, 87654321));
@@ -67,7 +58,6 @@ public class C206_CaseStudy {
 				accountManagement(accountList);
 			} else if (option == 5) {
 				// Rate Management
-//				rateManagement(rateList);
 
 			} else if (option == 6) {
 				// Feedback Management
